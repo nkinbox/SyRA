@@ -1,0 +1,60 @@
+CREATE SCHEMA `syra` ;
+CREATE TABLE `syra`.`technicians` (
+  `id` INT(10) UNSIGNED NOT NULL,
+  `username` CHAR(15) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `createdon` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdby` INT(10) UNSIGNED NOT NULL,
+  `groupname` CHAR(20) NOT NULL,
+  PRIMARY KEY (`id`));
+CREATE TABLE `syra`.`authentication` (
+  `id` INT(10) UNSIGNED NOT NULL,
+  `username` CHAR(40) NOT NULL,
+  `password` CHAR(40) NOT NULL,
+  `key` CHAR(40) NULL DEFAULT 0,
+  PRIMARY KEY (`id`));
+CREATE TABLE `syra`.`session` (
+  `id` INT(10) UNSIGNED NOT NULL,
+  `sessionid` CHAR(40) NULL DEFAULT 0,
+  `expiringon` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `ipaddress` CHAR(40) NULL DEFAULT 0,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `syra`.`remote` (
+  `remoteid` INT(10) UNSIGNED NOT NULL,
+  `name` CHAR(15) NOT NULL,
+  `passcode` CHAR(40) NOT NULL,
+  `id` INT(10) UNSIGNED NOT NULL,
+  `status` CHAR(1) NULL DEFAULT 'u',
+  `startat` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `stopat` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`remoteid`));
+CREATE TABLE `syra`.`remoteaccess` (
+  `sno` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `remoteid` INT(10) UNSIGNED NOT NULL,
+  `id` INT(10) UNSIGNED NOT NULL,
+  `control` CHAR(1) NULL DEFAULT 'p',
+  PRIMARY KEY (`sno`));
+CREATE TABLE `syra`.`administrator` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` CHAR(20) NOT NULL,
+  `licenses` INT(10) NULL DEFAULT 0,
+  `password` CHAR(40) NULL DEFAULT 0,
+  `key` CHAR(40) NULL DEFAULT 0,
+  `email` VARCHAR(45) NOT NULL,
+  `sessionid` CHAR(40) NULL DEFAULT 0,
+  `customdetails` TINYTEXT NULL,
+  `expiringon` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`));
+CREATE TABLE `syra`.`folders` (
+  `sno` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` INT(10) UNSIGNED NOT NULL,
+  `foldername` VARCHAR(45) NOT NULL,
+  `parentname` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`sno`));
+CREATE TABLE `syra`.`files` (
+  `sno` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` INT(10) UNSIGNED NOT NULL,
+  `filename` VARCHAR(60) NOT NULL,
+  `foldername` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`sno`));
